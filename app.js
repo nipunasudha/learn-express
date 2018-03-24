@@ -11,8 +11,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('layout', 'layouts/base');
 
 // Body parser
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // set static path
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,6 +44,17 @@ app.get('/home', (req, res) => {
         moretext: "More text from backend"
     });
 });
+
+
+app.post('/users/add', (req, res) => {
+    let newPerson = {
+        name: req.body.personName,
+        age: req.body.age
+    };
+    res.json(newPerson);
+});
+
+
 // app.get('/', (req, res) => res.json(people));
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'));
