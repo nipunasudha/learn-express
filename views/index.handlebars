@@ -1,0 +1,17 @@
+{{#extend "layout"}}
+
+    <h3>{{title}}</h3>
+    <ul>
+        {{#each people}}
+            <li>{{this.name}} ({{this.age}})</li>
+        {{/each}}
+
+    </ul>
+    <%- contentFor('infoBlock')%>
+    Please note that this is a result of inheritance!
+
+    {{#content 'infoBlock'}}
+        Info block default content
+    {{/content}}
+
+{{/extend}}

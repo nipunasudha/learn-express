@@ -1,18 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const exphbs = require('express-handlebars');
+const layouts = require('handlebars-layouts');
 const path = require('path');
-const expressLayouts = require('express-ejs-layouts');
 const app = express();
+handlebars.registerHelper(layouts(handlebars));
 
 //Validation
 const {check, validationResult} = require('express-validator/check');
 const {matchedData, sanitize} = require('express-validator/filter');
 
 //ViewEngine
-app.set('view engine', 'ejs');
-app.use(expressLayouts);
-app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layouts/base');
+app.engine('handlebars', exphbs({defaultLayout: 'base'}));
+app.set('view engine', 'handlebars');
+// app.set('views', path.join(__dirname, 'views'));
 
 // Body parser
 app.use(bodyParser.urlencoded({extended: false}));
@@ -45,7 +46,6 @@ app.get('/home', (req, res) => {
     res.render('index', {
         title: "Populator",
         people: people,
-        moretext: "More text from backend"
     });
 });
 

@@ -7,26 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery.min.js"></script>
-    <title><%= title ? title : "No Title" %></title>
+    <title>{{title}}</title>
 </head>
 <body>
 <div class="container mt-4">
-    <%- body %>
+    {{{body}}}
     <div class="alert alert-warning" role="alert">
-        <%- infoBlock %>
+        {{#block 'infoBlock'}}
+            Info block default content
+        {{/block}}
     </div>
     <hr>
-    <%- include ../partials/addPerson %>
+    {{> addPerson}}
 </div>
 
 <script>
 
-    let errors = <% if (locals.errors) { %>
-            <%- JSON.stringify(errors) %>
-            <% }else{ %>
-            <%- false %>
-            <% } %>
-        console.log(errors ? "ERRORS!" : "No Errors :)")
+    // if (locals.errors) {
+    //     JSON.stringify(errors)
+    // }
+    // console.log(errors ? "ERRORS!" : "No Errors :)")
 </script>
 <script src="/js/bootstrap.min.js"></script>
 </body>
