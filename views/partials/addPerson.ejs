@@ -2,11 +2,30 @@
 <form method="post" action="/users/add">
     <div class="form-group">
         <label for="personName">Name:</label>
-        <input name="personName" type="text" class="form-control" id="personName">
+        <input name="personName" type="text" id="personName"
+               class="form-control <% if(locals.errors.personName){ %>is-invalid<% } %>">
+        <div class="invalid-feedback">
+            <%= locals.errors.personName.msg %>
+        </div>
     </div>
     <div class="form-group">
         <label for="age">Age:</label>
-        <input name="age" type="number" class="form-control" id="age">
+        <input name="age" type="number" class="form-control <% if(locals.errors.age){ %>is-invalid<% } %>"
+               id="age">
+        <div class="invalid-feedback">
+            <%= locals.errors.age.msg %>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+                Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+                You must agree before submitting.
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
