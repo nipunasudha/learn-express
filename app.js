@@ -4,6 +4,10 @@ const path = require('path');
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
 
+//Validation
+const {check, validationResult} = require('express-validator/check');
+const {matchedData, sanitize} = require('express-validator/filter');
+
 //ViewEngine
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
@@ -46,13 +50,21 @@ app.get('/home', (req, res) => {
 });
 
 
-app.post('/users/add', (req, res) => {
-    let newPerson = {
-        name: req.body.personName,
-        age: req.body.age
-    };
-    res.json(newPerson);
-});
+app.post('/users/add',
+    [
+        check('personName').isEmail().withMessage('Not a valid message').trim().normalizeEmail(),
+        check('age', 'Age must be at least 2 chars long and contain one number').isLength({min: 2})
+    ], (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(422).json({ errors: errors.mapped() });
+        }
+        let newPerson = {
+            name: req.body.personName,
+            age: req.body.age
+        };
+        res.json(newPerson);
+    });
 
 
 // app.get('/', (req, res) => res.json(people));
