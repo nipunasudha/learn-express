@@ -19,6 +19,15 @@
     <%- include ../partials/addPerson %>
 </div>
 
+<script>
+
+    let errors = <% if (locals.errors) { %>
+            <%- JSON.stringify(errors) %>
+            <% }else{ %>
+            <%- false %>
+            <% } %>
+        console.log(errors ? "ERRORS!" : "No Errors :)")
+</script>
 <script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

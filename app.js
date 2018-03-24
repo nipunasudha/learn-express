@@ -52,18 +52,22 @@ app.get('/home', (req, res) => {
 
 app.post('/users/add',
     [
-        check('personName').isEmail().withMessage('Not a valid message').trim().normalizeEmail(),
+        check('personName').isEmail().withMessage('Not a valid name. should be an email').trim().normalizeEmail(),
         check('age', 'Age must be at least 2 chars long and contain one number').isLength({min: 2})
     ], (req, res) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(422).json({ errors: errors.mapped() });
+            res.render('index', {
+                title: "Populator",
+                people: people,
+                errors: errors.mapped()
+            });
         }
         let newPerson = {
             name: req.body.personName,
             age: req.body.age
         };
-        res.json(newPerson);
+        res.redirect('/home');
     });
 
 
